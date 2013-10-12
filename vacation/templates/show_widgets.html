@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-unit">
+        {% for w in widgets %}
+            {{ w|safe }}
+        {% endfor %}
+    </div>
+{% endblock content %}

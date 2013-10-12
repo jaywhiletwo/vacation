@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-unit">
+        <a href="{% url show_image active_id prev_image_id %}">
+            &lt;&lt;
+        </a>
+        <a href="/static/{{ path }}/{{ file }}" target=new>
+            <img width=80% src="/static/{{ path }}/{{ file }}">
+        </a>
+        <a href="{% url show_image active_id next_image_id %}">
+            &gt;&gt;
+        </a>
+    </div>
+{% endblock content %}

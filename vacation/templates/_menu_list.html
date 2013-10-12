@@ -1,0 +1,11 @@
+{% load url from future %}
+
+<li class="nav-header">{{ menu_item_type }}</li>
+     {% for m in menu_item_list %}
+        <li class="{% if active_check and m.id == active_id %}active{% endif %}">
+            <a href="{% url m.menu_path m.id%}">{{ m.menu_name }}<br>
+            <span style="font-size: 11px; white-space: nowrap;"><small>{{ m.posted|date:"D m/d"}}</small></span></a>
+        </li>
+    {% empty %}
+        <li>Nothing here right now</li>
+    {% endfor %}

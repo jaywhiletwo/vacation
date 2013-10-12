@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="well container">
+        {% if image %}
+        <div class="span4">
+        <p>
+                <a href="{% url show_image image.gallery_id image.id %}" target=new>
+                    <img width=80% src="/static/{{ image.gallery.dir_name }}/{{ image.filename }}.{{ image.extension }}">
+                </a>
+        </p>
+        </div>
+        {% endif %}
+        <div class="span4">
+                <p><h4>{{ text }}</h4></p>
+                <p class="muted">Posted {{ posted }}</p>
+        </div>
+        <div>
+{% endblock content %}

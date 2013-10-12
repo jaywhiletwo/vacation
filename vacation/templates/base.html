@@ -1,0 +1,46 @@
+{% load static %}
+{% load nav_tags %}
+<HTML>
+<HEAD>
+    <TITLE>{{ title }}</TITLE>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+        <style>
+                h1 a:hover {
+                    text-decoration: none;
+                }
+                .hero-unit a:hover {
+                    text-decoration: none;
+                }
+                body {
+                    overflow: scroll;
+                    background-image:url('{% static "ryan_bg_min.jpg" %}');
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                }
+        </style>
+</HEAD>
+<BODY>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+            <h1><a href="{% url show_home %}">Always On Vacation</a></h1>
+          <div class="well sidebar-nav">
+             <ul class="nav nav-list">
+                {% draw_menu 'message' messages_list 'Messages' %}
+                {% draw_menu 'gallery' collections_list 'Picture Galleries' %}
+                {% draw_menu 'video' videos_list 'Videos' %}
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+            <div align=right>
+                <a href={% url show_widgets %}>Widgets</a> | 
+                <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
+            </div>
+            <h3>{{ title }}</h3>
+{% block content %}
+{% endblock %}
+        </div>
+    </div>
+</div>
+</BODY></HTML>

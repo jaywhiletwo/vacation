@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-unit">
+        <h3>{{ form_title }}</h3>
+        <form enctype="{{ form_enctype }}" method="post" action="{{ form_action }}">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <input type="submit">
+        </form>
+    </div>
+{% endblock content %}

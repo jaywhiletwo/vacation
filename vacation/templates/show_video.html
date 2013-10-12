@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-unit">
+        <video width=100% controls autobuffer> 
+            <source src="/static/{{ path }}/{{ file }}" type="video/mp4">
+        </video>
+    </div>
+{% endblock content %}

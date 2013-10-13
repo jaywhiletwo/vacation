@@ -34793,3 +34793,4 @@ error: [Errno 32] Broken pipe
 [11/Oct/2013 19:52:40] "GET /static/Fung_Pics/yen0977.jpg HTTP/1.1" 404 1674
 [11/Oct/2013 20:01:38] "GET /show_image/2/43/ HTTP/1.1" 200 5596
 [11/Oct/2013 20:12:43] "GET /static/Trash_the_Dress/Web/yen0743.jpg HTTP/1.1" 404 1704
+python: can't open file '~/Projects/vacation/manage.py': [Errno 2] No such file or directory

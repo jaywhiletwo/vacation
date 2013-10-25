@@ -33,8 +33,8 @@ def build_rss(value):
         return 'No RSS found at %s' % value
 
     link_list = []
-    for entry in feed['entries']:
-        link_list.extend(['<li><a href="">', entry['title'], '</a></li>'])
+    for entry in feed['entries'][:7]:
+        link_list.extend(['<li><a href="%s">' % entry['link'], entry['title'], '</a></li>'])
 
     if not link_list:
         return 'No RSS found at %s' % value

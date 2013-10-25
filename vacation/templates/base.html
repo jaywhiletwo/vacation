@@ -20,6 +20,10 @@
         </style>
 </HEAD>
 <BODY>
+    <div class="container-fluid" style="background-color:BCBCBC" align=right>
+        <b><a href="http://jenandjefflee.com/launch/">Widgets</a></b> | 
+        <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
+    </div>
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
@@ -33,10 +37,6 @@
           </div>
         </div>
         <div class="span9">
-            <div align=right>
-                <a href={% url show_widgets %}>Widgets</a> | 
-                <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
-            </div>
             <h3>{{ title }}</h3>
 {% block content %}
 {% endblock %}

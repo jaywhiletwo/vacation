@@ -1,0 +1,17 @@
+{% load static %}
+<HTML>
+<HEAD>
+    <TITLE>Vacation Launch</TITLE>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+</HEAD>
+<BODY>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        {% for widget in widgets %}
+        <div class="span3">
+            {{ widget }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</BODY></HTML>

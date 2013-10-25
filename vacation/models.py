@@ -2,6 +2,12 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 
+class Widget(models.Model):
+    title = models.CharField(max_length=50)
+    type = models.CharField(max_length=20) # RSS, TEXT, CUSTOM
+    value = models.CharField(max_length=5000)
+
+
 class MenuItem(models.Model):
     posted = models.DateTimeField(auto_now_add=True)
 

@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from django.contrib import admin
+from vacation.views.launch import launch
 from vacation.views.static_views import *
 from vacation.views.upload_views import UploadImage
 from vacation.views.reboot_views import RebootView
@@ -17,6 +18,7 @@ urlpatterns = patterns('',
 	url(r'^show_video/(?P<video_id>\d+)/$', show_video, name='show_video'),
 	url(r'^show_message/(?P<message_id>\d+)/$', show_message, name='show_message'),
     url(r'^login/$', login_user, name='login_user'),
+    url(r'^launch/$', launch, name='launch'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}), 
     url(r'^widgets/$', login_required(show_widgets), name='show_widgets'),
     url(r'^upload/$', login_required(UploadImage.as_view(), login_url='/admin'), name='upload_image'),

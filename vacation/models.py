@@ -2,10 +2,19 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 
+
 class Widget(models.Model):
+    WIDGET_TYPE_CHOICES = (
+        ('RSS', 'RSS Feed'),
+        ('TEXT', 'Simple Text'),
+        ('CUSTOM', 'Custom Widget'),
+    )
     title = models.CharField(max_length=50)
-    type = models.CharField(max_length=20) # RSS, TEXT, CUSTOM
-    value = models.CharField(max_length=5000)
+    type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')
+    value = models.TextField()
+
+    def __unicode__(self):
+        return '(%s) %s' % (self.type, self.title)
 
 
 class MenuItem(models.Model):

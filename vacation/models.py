@@ -7,7 +7,7 @@ class Widget(models.Model):
     WIDGET_TYPE_CHOICES = (
         ('RSS', 'RSS Feed'),
         ('TEXT', 'Simple Text'),
-        ('CUSTOM', 'Custom Widget'),
+        ('STOCK', 'Stocks Widget'),
     )
     title = models.CharField(max_length=50)
     type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')

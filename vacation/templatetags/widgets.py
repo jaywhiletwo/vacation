@@ -1,6 +1,7 @@
 from django import template
 import feedparser
 import requests
+import csv
 
 
 register = template.Library()
@@ -12,8 +13,7 @@ def render_widget(widget):
     elif widget.type == 'RSS':
         value = build_rss(widget.value)
     elif widget.type == 'STOCK':
-        r = requests.get(widget.value)
-        value = r.content
+        value = format_stocks(widget.value)
     else:
         raise Exception
 
@@ -42,11 +42,28 @@ def build_rss(value):
 
 
 def format_stocks(value):
-    url = 'http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=snl1c1p2' % value
+    url = 'http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1c1p2' % value
     try:
-        r = requests.get(value)
+        r = requests.get(url)
     except:
         return 'Broken'
+    
+    text = []
+    for row in r.content.split('\n'):
+        if row:
+            line = row.split(',')
+            s = line[0][1:-1]
+            linked_symbol = '<tr><td><a href="http://finance.yahoo.com/q?s=%s">%s</a>' % (s, s)
+            text.extend([linked_symbol, color(line[2]), color(line[3].replace('"','(', 1).replace('"', ')')), '</td><td align="right">', line[1], '</td></tr>', ])
+    return '<table>' + ' '.join(text) + '</table>'
 
-    csv = r.content
-    return csv
+
+def color(change):
+    if '-' in change:
+        color = 'red'
+    elif '+' in change:
+        color = 'green'
+    else:
+        color = ''
+
+    return '<font size=2 color="%s">%s</font>' % (color, change)

@@ -8,23 +8,34 @@ register = template.Library()
 
 @register.inclusion_tag('widget.html')
 def render_widget(widget):
-    if widget.type == 'TEXT':
-        value = '<pre>%s</pre>' % widget.value
-    elif widget.type == 'RSS':
-        value = build_rss(widget.value)
-    elif widget.type == 'STOCK':
-        value = format_stocks(widget.value)
-    elif widget.type == 'LINKS':
-        value = build_links(widget.value)
-    else:
-        raise Exception
-
     context = {
         'title': widget.title,
-        'value': value,
     }
     
+    if widget.type == 'TEXT':
+        context['value'] = build_text(widget.value)
+    elif widget.type == 'RSS':
+        context['value'] = build_rss(widget.value)
+    elif widget.type == 'STOCK':
+        context['value'] = format_stocks(widget.value)
+    elif widget.type == 'LINKS':
+        context['value'] = build_links(widget.value)
+    else:
+        raise Exception('not a valid widget')
+
     return context
+
+
+def build_text(value):
+    contents = value.split('\n')
+    if contents[0].startswith('style='):
+        style = contents[0]
+        text = ''.join(contents[1:])
+    else:
+        style = ''
+        text = value
+    
+    return '<pre %s>%s</pre>' % (style, text)
 
 
 def build_rss(value):

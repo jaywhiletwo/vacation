@@ -14,6 +14,8 @@ def render_widget(widget):
         value = build_rss(widget.value)
     elif widget.type == 'STOCK':
         value = format_stocks(widget.value)
+    elif widget.type == 'LINKS':
+        value = build_links(widget.value)
     else:
         raise Exception
 
@@ -34,7 +36,7 @@ def build_rss(value):
 
     link_list = []
     for entry in feed['entries'][:7]:
-        link_list.extend(['<li><a href="%s">' % entry['link'], entry['title'], '</a></li>'])
+        link_list.extend(['<li><a target="blank" href="%s">' % entry['link'], entry['title'], '</a></li>'])
 
     if not link_list:
         return 'No RSS found at %s' % value
@@ -53,7 +55,7 @@ def format_stocks(value):
         if row:
             line = row.split(',')
             s = line[0][1:-1]
-            linked_symbol = '<tr><td><a href="http://finance.yahoo.com/q?s=%s">%s</a>' % (s, s)
+            linked_symbol = '<tr><td><a target="blank" href="http://finance.yahoo.com/q?s=%s">%s</a>' % (s, s)
             text.extend([linked_symbol, color(line[2]), color(line[3].replace('"','(', 1).replace('"', ')')), '</td><td align="right">', line[1], '</td></tr>', ])
     return '<table>' + ' '.join(text) + '</table>'
 
@@ -67,3 +69,12 @@ def color(change):
         color = ''
 
     return '<font size=2 color="%s">%s</font>' % (color, change)
+
+
+def build_links(value):
+    links_val = ['<ul>', ]
+    for row in value.split('\n'):
+        line = row.split(',')
+        links_val.extend(['<li><a target="blank" href="', line[1], '">', line[0], '</a></li>',])  
+    links_val.append('</ul>')
+    return ''.join(links_val)

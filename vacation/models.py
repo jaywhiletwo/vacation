@@ -1,6 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-
 
 
 class Widget(models.Model):
@@ -16,6 +16,11 @@ class Widget(models.Model):
 
     def __unicode__(self):
         return '(%s) %s' % (self.type, self.title)
+
+
+class WidgetList(models.Model):
+    user = models.ForeignKey(User)
+    widgets = models.ManyToManyField(Widget)
 
 
 class MenuItem(models.Model):

@@ -10,9 +10,11 @@ register = template.Library()
 def render_widget(widget, head_color='black', body_color='white'):
     context = {
         'title': widget.title,
+        'title_link': widget.title_link or '',
         'edit_link': '/admin/vacation/widget/%s/' % widget.id,
         'head_color': head_color,
         'body_color': body_color,
+        'cols': widget.columns,
     }
     
     if widget.type == 'TEXT':

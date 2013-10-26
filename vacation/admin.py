@@ -22,9 +22,14 @@ class GalleryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', )
 
 
+class WidgetAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'title_link', 'columns', )
+    list_editable = ('columns', )
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Gallery, GalleryAdmin)
-admin.site.register(Widget)
+admin.site.register(Widget, WidgetAdmin)
 admin.site.register(WidgetPick)
 admin.site.register(Image)
 admin.site.register(Video)

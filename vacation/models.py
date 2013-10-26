@@ -12,9 +12,11 @@ class Widget(models.Model):
         ('RAW', 'Raw HTML and JS'),
     )
     title = models.CharField(max_length=50)
+    title_link = models.CharField(max_length=255, null=True, blank=True)
     type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')
     value = models.TextField()
     users = models.ManyToManyField(User, through='WidgetPick')
+    columns = models.PositiveSmallIntegerField(default=4)
 
     def __unicode__(self):
         return '(%s) %s' % (self.type, self.title)

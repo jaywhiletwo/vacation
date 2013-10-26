@@ -23,6 +23,8 @@ def render_widget(widget, head_color='black', body_color='white'):
         context['value'] = format_stocks(widget.value)
     elif widget.type == 'LINKS':
         context['value'] = build_links(widget.value)
+    elif widget.type == 'RAW':
+        context['value'] = widget.value
     else:
         raise Exception('not a valid widget')
 

@@ -8,19 +8,31 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'WidgetList'
-        db.create_table('vacation_widgetlist', (
+        # Deleting model 'WidgetList'
+        db.delete_table('vacation_widgetlist')
+
+        # Adding model 'WidgetPick'
+        db.create_table('vacation_widgetpick', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('widget', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['vacation.Widget'], null=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
             ('order', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
         ))
-        db.send_create_signal('vacation', ['WidgetList'])
+        db.send_create_signal('vacation', ['WidgetPick'])
 
 
     def backwards(self, orm):
-        # Deleting model 'WidgetList'
-        db.delete_table('vacation_widgetlist')
+        # Adding model 'WidgetList'
+        db.create_table('vacation_widgetlist', (
+            ('widget', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['vacation.Widget'], null=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('order', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
+        ))
+        db.send_create_signal('vacation', ['WidgetList'])
+
+        # Deleting model 'WidgetPick'
+        db.delete_table('vacation_widgetpick')
 
 
     models = {
@@ -98,11 +110,11 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'type': ('django.db.models.fields.CharField', [], {'default': "'TEXT'", 'max_length': '20'}),
-            'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'through': "orm['vacation.WidgetList']", 'symmetrical': 'False'}),
+            'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'through': "orm['vacation.WidgetPick']", 'symmetrical': 'False'}),
             'value': ('django.db.models.fields.TextField', [], {})
         },
-        'vacation.widgetlist': {
-            'Meta': {'object_name': 'WidgetList'},
+        'vacation.widgetpick': {
+            'Meta': {'object_name': 'WidgetPick'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),

@@ -6,10 +6,17 @@
     <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 </HEAD>
 <BODY>
-    <div class="container-fluid" style="background-color:BCBCBC" align=right>
+    <div class="container-fluid" style="background-color:BCBCBC">
+      <div style='float: left'>
+        {% if user %}
+          Welcome back, {{ user.username }}
+        {% endif %}
+      </div>
+      <div align=right>
         <b><a href="http://jenandjefflee.com/">Home</a></b> | 
-        <b><a target="blank" href="http://jenandjefflee.com/admin/vacation/widget/">Configure Widgets</a></b> | 
+        <b><a target="blank" href="http://jenandjefflee.com/admin/auth/user/{{ user.id }}/#widgetpick_set-group">Configure Widgets</a></b> | 
         <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
+      </div>
     </div>
     <div class="container-fluid">
       <div class="row-fluid">

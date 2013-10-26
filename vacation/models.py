@@ -13,15 +13,18 @@ class Widget(models.Model):
     title = models.CharField(max_length=50)
     type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')
     value = models.TextField()
+    users = models.ManyToManyField(User, through='WidgetPick')
 
     def __unicode__(self):
         return '(%s) %s' % (self.type, self.title)
 
 
-class WidgetList(models.Model):
-    user = models.ForeignKey(User)
-    widgets = models.ManyToManyField(Widget)
-
+class WidgetPick(models.Model):
+    widget = models.ForeignKey(Widget, null=True)
+    user = models.ForeignKey(User, null=True)
+    order = models.PositiveIntegerField(default=0)
+    head_color = models.CharField(max_length=10, null=True, blank=True)
+    body_color = models.CharField(max_length=10, null=True, blank=True)
 
 class MenuItem(models.Model):
     posted = models.DateTimeField(auto_now_add=True)

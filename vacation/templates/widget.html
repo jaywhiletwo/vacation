@@ -1,4 +1,9 @@
 <div class="span4">
-        <b>{{ title }}</b>
-        {{ value|safe }}
+        <div style="background-color: {{ head_color }}; padding: 3px">
+            <span style="color: white"><b> {{ title }} </b></span>
+            <span style="float: right"> <a target="blank" href="{{ edit_link }}">Edit</a> </span>
+        </div>
+        <div style="background-color: {{ body_color }}; padding: 3px">
+            {{ value|safe }}
+        </div>
 </div>

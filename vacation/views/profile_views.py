@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -30,7 +31,7 @@ def login_user(request):
                 if user is not None:
                         if user.is_active:
                                 login(request, user)
-                                return HttpResponseRedirect('/widgets')
+                                return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
         context = {
             'form_title': 'Login', 
             'form_action': '/login/',

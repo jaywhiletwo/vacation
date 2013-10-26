@@ -162,5 +162,5 @@ LOGGING = {
 
 LOCAL_RESOURCE = '/mnt/sidekick/Pictures/'
 
-LOGIN_REDIRECT_URL = '/widgets'
+LOGIN_REDIRECT_URL = '/launch'
 LOGIN_URL = '/login'

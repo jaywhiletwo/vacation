@@ -7,12 +7,12 @@ import csv
 register = template.Library()
 
 @register.inclusion_tag('widget.html')
-def render_widget(widget):
+def render_widget(widget, head_color='black', body_color='white'):
     context = {
         'title': widget.title,
         'edit_link': '/admin/vacation/widget/%s/' % widget.id,
-        'head_color': '#FF11AA',
-        'body_color': '#FFEEDD',
+        'head_color': head_color,
+        'body_color': body_color,
     }
     
     if widget.type == 'TEXT':

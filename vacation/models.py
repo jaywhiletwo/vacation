@@ -23,8 +23,7 @@ class WidgetPick(models.Model):
     widget = models.ForeignKey(Widget, null=True)
     user = models.ForeignKey(User, null=True)
     order = models.PositiveIntegerField(default=0)
-    head_color = models.CharField(max_length=10, null=True, blank=True)
-    body_color = models.CharField(max_length=10, null=True, blank=True)
+
 
 class MenuItem(models.Model):
     posted = models.DateTimeField(auto_now_add=True)

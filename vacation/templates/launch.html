@@ -13,11 +13,12 @@
         {% endif %}
       </div>
       <div align=right>
-        <b><a href="http://jenandjefflee.com/">Home</a></b> | 
+        <b><a href="http://jenandjefflee.com/">Gallery</a></b> | 
         <b><a target="blank" href="http://jenandjefflee.com/admin/auth/user/{{ user.id }}/#widgetpick_set-group">Configure Widgets</a></b> | 
         <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
       </div>
     </div>
+    <br>
     <div class="container-fluid">
       <div class="row-fluid">
         {% for widget in widgets %}

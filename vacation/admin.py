@@ -7,15 +7,16 @@ import subprocess
 admin.site.unregister(User)
 
 
-
 class UserInline(admin.TabularInline):
     model = WidgetPick
     ordering = ('order', )
+
 
 class UserAdmin(admin.ModelAdmin):
     inlines = [
         UserInline,
     ]
+
 
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', )

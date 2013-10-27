@@ -1,19 +1,24 @@
 {% extends "widget.html" %}
 
 {% block widget_body %}
-<table>
-    <tr>
-        <td>Symbol</td>
-        <td colspan=2>Price Change </td>
-        <td>P/E</td>
-        <td>Price</td>
-    </tr>
-    {% for quote in quotes %}
-    <tr>
-        <td><a target="_blank" href="http://finance.yahoo.com/q?s={{ quote.symbol }}">{{ quote.symbol }}</a></td>
-        <td colspan=2 align=right>{{ quote.change_price|safe }} {{ quote.change_percent|safe }}</td>
-        <td>{{ quote.pe|safe }}</td>
-        <td align=right>${{ quote.price|safe }}</td>
-    {% endfor %}
-</table>
+  <style>
+    .row-fluid [class*="span"] {
+      min-height: 0px;
+    }
+
+  </style>
+  <div class="row-fluid">
+        <div class=span2>Sym</div>
+        <div class=span5 align=right>Price Change </div>
+        <div class=span2 align=center>P/E</div>
+        <div class=span3 align=right>Price</div>
+  </div>
+  {% for quote in quotes %}
+  <div class="row-fluid">
+      <div class=span2><a target="_blank" href="http://finance.yahoo.com/q?s={{ quote.symbol }}">{{ quote.symbol }}</a></div>
+      <div class=span5 align=right>{{ quote.change_price|safe }} {{ quote.change_percent|safe }}</div>
+      <div class=span2 align=center>{{ quote.pe|safe }}</div>
+      <div class=span3 align=right>${{ quote.price|safe }}</div>
+  </div>
+  {% endfor %}
 {% endblock %}

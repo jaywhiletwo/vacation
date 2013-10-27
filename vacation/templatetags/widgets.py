@@ -1,4 +1,5 @@
 from django import template
+from django.template.loader import render_to_string
 import feedparser
 import requests
 import csv
@@ -6,7 +7,7 @@ import csv
 
 register = template.Library()
 
-@register.inclusion_tag('widget.html')
+@register.simple_tag
 def render_widget(widget, head_color='black', body_color='white'):
     context = {
         'title': widget.title,
@@ -22,7 +23,8 @@ def render_widget(widget, head_color='black', body_color='white'):
     elif widget.type == 'RSS':
         context['value'] = build_rss(widget.value)
     elif widget.type == 'STOCK':
-        context['value'] = format_stocks(widget.value)
+        context['quotes'] = format_stocks(widget.value)
+        return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'LINKS':
         context['value'] = build_links(widget.value)
     elif widget.type == 'RAW':
@@ -30,7 +32,7 @@ def render_widget(widget, head_color='black', body_color='white'):
     else:
         raise Exception('not a valid widget')
 
-    return context
+    return render_to_string('widget.html', context)
 
 
 def build_text(value):
@@ -62,24 +64,31 @@ def build_rss(value):
 
 
 def format_stocks(value):
-    url = 'http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1c1p2' % value
+    url = 'http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1c1p2r' % value
     try:
         r = requests.get(url)
     except:
         return 'Broken'
     
-    text = []
+    quotes = []
     for row in r.content.split('\n'):
         if row:
             line = row.split(',')
-            s = line[0][1:-1]
-            linked_symbol = '<tr><td><a target="_blank" href="http://finance.yahoo.com/q?s=%s">%s</a>' % (s, s)
-            text.extend([linked_symbol, color(line[2]), color(line[3].replace('"','(', 1).replace('"', ')')), '</td><td align="right">', line[1], '</td></tr>', ])
-    return '<table>' + ' '.join(text) + '</table>'
+            quote = {
+                'symbol': line[0][1:-1],
+                'change_price': color(line[3].replace('"','(', 1).replace('"', ')')),
+                'change_percent': color(line[2]), 
+                'pe': color(line[4], given_color='#888888'),
+                'price': line[1],
+            }
+            quotes.append(quote)
+    return quotes
 
 
-def color(change):
-    if '-' in change:
+def color(change, given_color=None):
+    if given_color:
+        color = given_color
+    elif '-' in change:
         color = 'red'
     elif '+' in change:
         color = 'green'

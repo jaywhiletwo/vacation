@@ -4,6 +4,8 @@
             <span style="float: right"> <a target="_blank" href="{{ edit_link }}">Edit</a> </span>
         </div>
         <div style="background-color: {{ body_color }}; padding: 3px">
+        {% block widget_body %}
             {{ value|safe }}
+        {% endblock %}
         </div>
 </div>

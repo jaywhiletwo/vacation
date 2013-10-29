@@ -1,5 +1,5 @@
-<div class="col-md-{% firstof cols 4 %}" style="min-height: 300px; max-height: 300px;">
-    <div class="row" style="background-color: {{ head_color }}; margin: 3px">
+<div class="col-md-{% firstof cols 4 %}" style="min-height: 300px; max-height: 300px; margin-top: 20px">
+    <div class="row" style="background-color: {{ head_color }}; margin: 3px; padding: 3px">
         <b> {% if title_link %}<a style="color: white" target="_blank" href="{{ title_link }}">{{ title }}</a>{% else %}<span style="color:white">{{ title }}</span>{% endif %} </b>
         <span style="float: right"> <a target="_blank" href="{{ edit_link }}">Edit</a> </span>
     </div>

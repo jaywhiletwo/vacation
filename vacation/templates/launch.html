@@ -19,7 +19,6 @@
         <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
       </div>
     </div>
-    <br><br>
     <div>
         {% for widget in widgets %}
             {% render_widget widget %}

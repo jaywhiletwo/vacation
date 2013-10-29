@@ -30,21 +30,22 @@ def render_widget(widget, head_color='black', body_color='white'):
     elif widget.type == 'RAW':
         context['value'] = widget.value
     else:
-        raise Exception('not a valid widget')
+        print '%s is not a valid widget' % widget.type
 
     return render_to_string('widget.html', context)
 
 
 def build_text(value):
     contents = value.split('\n')
-    if contents[0].startswith('style='):
-        style = contents[0]
-        text = ''.join(contents[1:])
-    else:
-        style = ''
-        text = value
-    
-    return '<pre %s>%s</pre>' % (style, text)
+    try:
+        if contents[0].startswith('style='):
+            style = contents[0]
+            text = ''.join(contents[1:])
+            return '<pre %s>%s</pre>' % (style, text)
+    except IndexError:
+        print 'failed to display text widget: %s' % value
+
+    return '<pre %s>%s</pre>' % (style, value)
 
 
 def build_rss(value):
@@ -72,7 +73,7 @@ def format_stocks(value):
     
     quotes = []
     for row in r.content.split('\n'):
-        if row:
+        try:
             line = row.split(',')
             quote = {
                 'symbol': line[0][1:-1],
@@ -82,6 +83,9 @@ def format_stocks(value):
                 'price': line[1],
             }
             quotes.append(quote)
+        except IndexError:
+            print 'stocks failed on row: %s' % row
+
     return quotes
 
 
@@ -102,6 +106,10 @@ def build_links(value):
     links_val = ['<ul>', ]
     for row in value.split('\n'):
         line = row.split(',')
-        links_val.extend(['<li><a target="_blank" href="', line[1], '">', line[0], '</a></li>',])  
+        try:
+            links_val.extend(['<li><a target="_blank" href="', line[1], '">', line[0], '</a></li>',])  
+        except IndexError:
+            print 'build links failed on row: %s' % row
+
     links_val.append('</ul>')
     return ''.join(links_val)

@@ -9,6 +9,7 @@ register = template.Library()
 
 @register.simple_tag
 def render_widget(widget, head_color='black', body_color='white'):
+    head_color = widget.page.header_color
     context = {
         'title': widget.title,
         'title_link': widget.title_link or '',

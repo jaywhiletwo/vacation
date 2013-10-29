@@ -1,36 +1,36 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.conf import settings
-from vacation.models import Gallery, Image, Video, Message, Widget, WidgetPick
+from vacation.models import Gallery, Image, Video, Message, Widget, WidgetPage
 import subprocess
 
 admin.site.unregister(User)
 
 
-class UserInline(admin.TabularInline):
-    model = WidgetPick
+class WidgetInline(admin.StackedInline):
+    model = Widget
     ordering = ('order', )
-
-
-class UserAdmin(admin.ModelAdmin):
-    inlines = [
-        UserInline,
-    ]
+    extra = 1
 
 
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', )
 
 
+class PageAdmin(admin.ModelAdmin):
+    inlines = [
+        WidgetInline,
+    ]
+
+
 class WidgetAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'title_link', 'columns', )
-    list_editable = ('columns', )
+    list_display = ('__unicode__', 'title_link', 'columns', 'page', )
+    list_editable = ('columns', 'page', )
 
 
-admin.site.register(User, UserAdmin)
 admin.site.register(Gallery, GalleryAdmin)
 admin.site.register(Widget, WidgetAdmin)
-admin.site.register(WidgetPick)
+admin.site.register(WidgetPage, PageAdmin)
 admin.site.register(Image)
 admin.site.register(Video)
 admin.site.register(Message)

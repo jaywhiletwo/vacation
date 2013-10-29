@@ -3,31 +3,6 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 
-class Widget(models.Model):
-    WIDGET_TYPE_CHOICES = (
-        ('RSS', 'RSS Feed'),
-        ('TEXT', 'Simple Text'),
-        ('STOCK', 'Stocks Widget'),
-        ('LINKS', 'Links and Bookmarks'),
-        ('RAW', 'Raw HTML and JS'),
-    )
-    title = models.CharField(max_length=50)
-    title_link = models.CharField(max_length=255, null=True, blank=True)
-    type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')
-    value = models.TextField()
-    users = models.ManyToManyField(User, through='WidgetPick')
-    columns = models.PositiveSmallIntegerField(default=4)
-
-    def __unicode__(self):
-        return '(%s) %s' % (self.type, self.title)
-
-
-class WidgetPick(models.Model):
-    widget = models.ForeignKey(Widget, null=True)
-    user = models.ForeignKey(User, null=True)
-    order = models.PositiveIntegerField(default=0)
-
-
 class MenuItem(models.Model):
     posted = models.DateTimeField(auto_now_add=True)
 
@@ -69,6 +44,38 @@ class Image(models.Model):
     def __unicode__(self):
         return '%s/%s.%s' % (self.gallery.dir_name, self.filename, self.extension)
     
+
+class WidgetPage(models.Model):
+    user = models.ForeignKey(User, null=True)
+    name = models.CharField(max_length=200, null=True)
+    header_color = models.CharField(max_length=10, default='black')
+    banner_image = models.ForeignKey(Image, null=True, blank=True)
+    
+    def __unicode__(self):
+        return '(%s) %s' % (self.user, self.name)
+
+
+class Widget(models.Model):
+    WIDGET_TYPE_CHOICES = (
+        ('RSS', 'RSS Feed'),
+        ('TEXT', 'Simple Text'),
+        ('STOCK', 'Stocks Widget'),
+        ('LINKS', 'Links and Bookmarks'),
+        ('RAW', 'Raw HTML and JS'),
+    )
+    title = models.CharField(max_length=50)
+    title_link = models.CharField(max_length=255, null=True, blank=True)
+    type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')
+    value = models.TextField()
+    page = models.ForeignKey(WidgetPage, null=True)
+    columns = models.PositiveSmallIntegerField(default=4)
+    order = models.PositiveIntegerField(default=0)
+
+    def __unicode__(self):
+        return '(%s) %s' % (self.type, self.title)
+
+
+
 
 class Video(MenuItem, models.Model):
     filename = models.CharField(max_length=255)

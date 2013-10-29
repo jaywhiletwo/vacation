@@ -7,15 +7,15 @@
     <link href="{% static 'bootstrap3/css/bootstrap.css' %}" rel="stylesheet">
 </HEAD>
 <BODY>
-    <div >
-      <div class="col-md-6" style="background-color:BCBCBC">
+    <div>
+      <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px">
         {% if user %}
           Welcome back, {{ user.username }}
         {% endif %}
       </div>
-      <div class="col-md-6" style="background-color:BCBCBC" align=right>
+      <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px" align=right>
         <b><a href="http://jenandjefflee.com/">Gallery</a></b> | 
-        <b><a target="_blank" href="http://jenandjefflee.com/admin/auth/user/{{ user.id }}/#widgetpick_set-group">Configure Widgets</a></b> | 
+        <b><a target="_blank" href="http://jenandjefflee.com/admin/vacation/widgetpage/{{ page.id }}">Configure Page</a></b> | 
         <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
       </div>
     </div>

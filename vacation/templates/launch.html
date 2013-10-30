@@ -16,6 +16,11 @@
       <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px" align=right>
         <b><a href="http://jenandjefflee.com/">Gallery</a></b> | 
         <b><a target="_blank" href="http://jenandjefflee.com/admin/vacation/widgetpage/{{ page.id }}">Configure Page</a></b> | 
+        <select id="pager" onchange="switchPage();">
+            {% for p in user.widgetpage_set.all %}
+                <option value="{% url launch_page p.id %}" {% if p.id == page.id %}selected{% endif %}>{{ p.name }}</option>
+            {% endfor %}
+        </select> | 
         <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
       </div>
     </div>
@@ -25,4 +30,10 @@
         {% endfor %}
     </div>
   </div>
+  <script type="text/javascript">
+    function switchPage() {
+        var url = document.getElementById("pager").value;
+        window.location.href = url;
+    }
+  </script>
 </BODY></HTML>

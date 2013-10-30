@@ -60,6 +60,7 @@ class Widget(models.Model):
         ('RSS', 'RSS Feed'),
         ('TEXT', 'Simple Text'),
         ('STOCK', 'Stocks Widget'),
+        ('IMAGE', 'Image Widget'),
         ('LINKS', 'Links and Bookmarks'),
         ('RAW', 'Raw HTML and JS'),
     )

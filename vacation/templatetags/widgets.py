@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 import feedparser
 import requests
 import csv
+from vacation.models import Image
 
 
 register = template.Library()
@@ -25,6 +26,11 @@ def render_widget(widget, head_color='black', body_color='white'):
         context['value'] = build_rss(widget.value)
     elif widget.type == 'STOCK':
         context['quotes'] = format_stocks(widget.value)
+        return render_to_string('widget_%s.html' % widget.type, context)
+    elif widget.type == 'IMAGE':
+        i = Image.objects.get(id=widget.value)
+        context['image_title'] = i.filename
+        context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
         return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'LINKS':
         context['value'] = build_links(widget.value)

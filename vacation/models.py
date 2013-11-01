@@ -62,6 +62,7 @@ class Widget(models.Model):
         ('STOCK', 'Stocks Widget'),
         ('IMAGE', 'Image Widget'),
         ('LINKS', 'Links and Bookmarks'),
+        ('CAL', 'Calendar Iframe'),
         ('RAW', 'Raw HTML and JS'),
     )
     title = models.CharField(max_length=50)

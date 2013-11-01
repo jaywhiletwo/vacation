@@ -34,6 +34,9 @@ def render_widget(widget, head_color='black', body_color='white'):
         return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'LINKS':
         context['value'] = build_links(widget.value)
+    elif widget.type == 'CAL':
+        context['value'] = widget.value
+        return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'RAW':
         context['value'] = widget.value
     else:
@@ -120,3 +123,4 @@ def build_links(value):
 
     links_val.append('</ul>')
     return ''.join(links_val)
+

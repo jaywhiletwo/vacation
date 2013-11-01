@@ -1,0 +1,18 @@
+{% extends "widget.html" %}
+
+{% block widget_title %}
+    <span style="color: white">{{ title }}</span> <a target="_blank" href="https://accounts.google.com/Login">Login</a>
+{% endblock %}
+
+{% block widget_body %}
+    <div id="calendarframe" align=center style="position:relative">
+        <div id="calendarback" style="position: absolute; top:0; left: 0;">
+            <p style="padding: 50px">
+                Log in to Google to view your Calendar
+            </p>
+        </div>
+        <div id="calendarfront" style="position: absolute; top: 0; left: 0; ">
+            {{ value|safe }}
+        </div>
+    </div>
+{% endblock %}

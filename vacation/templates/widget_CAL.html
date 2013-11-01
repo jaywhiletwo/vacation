@@ -6,12 +6,12 @@
 
 {% block widget_body %}
     <div id="calendarframe" align=center style="position:relative">
-        <div id="calendarback" style="position: absolute; top:0; left: 0;">
+        <div id="calendarback" style="position: absolute; top:0; left: 0; ">
             <p style="padding: 50px">
                 Log in to Google to view your Calendar
             </p>
         </div>
-        <div id="calendarfront" style="position: absolute; top: 0; left: 0; ">
+        <div id="calendarfront" style="position: absolute; top: 0; left: 0; width: 100%;">
             {{ value|safe }}
         </div>
     </div>

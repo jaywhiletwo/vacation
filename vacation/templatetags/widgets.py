@@ -1,5 +1,6 @@
 from django import template
 from django.template.loader import render_to_string
+from random import choice
 import feedparser
 import requests
 import csv
@@ -28,7 +29,8 @@ def render_widget(widget, head_color='black', body_color='white'):
         context['quotes'] = format_stocks(widget.value)
         return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'IMAGE':
-        i = Image.objects.get(id=widget.value)
+        images = Image.objects.filter(id__in=widget.value.split(','))
+        i = choice(images)
         context['image_title'] = i.filename
         context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
         return render_to_string('widget_%s.html' % widget.type, context)

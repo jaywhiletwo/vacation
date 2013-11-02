@@ -1,0 +1,31 @@
+{% extends "widget.html" %}
+
+{% block widget_body %}
+  <ul class="list-unstyled">
+  {% for entry in entries %}
+    <li><i id="bullet_{{ id }}_{{ forloop.counter }}" class="glyphicon glyphicon-chevron-right" style="font-size: 9px; padding-bottom: 5px; " onclick="showRssDiv{{ id }}({{ forloop.counter }});"></i> 
+        <a target="_blank" href="{{ entry.link }}" >{{ entry.title }}</a>
+        <div style="display: none; font-size: 12px; font-family: Helvetica; " id="body_{{ id }}_{{ forloop.counter }}">
+            <style>
+                img{max-width: 100%}
+            </style>
+            {{ entry.content.0.value|safe }}
+        </div>
+    </li>
+  {% endfor %}
+  </ul>
+  <script type="text/javascript">
+    function showRssDiv{{ id }}(divNum){
+        divElement = document.getElementById("body_{{ id }}_" + divNum);
+        bElement = document.getElementById("bullet_{{ id }}_" + divNum);
+        if (divElement.style.display == "none"){
+            divElement.style.display = "block";
+            bElement.className = "glyphicon glyphicon-chevron-down";
+        }
+        else {
+            divElement.style.display = "none";
+            bElement.className = "glyphicon glyphicon-chevron-right";
+        }
+    }
+  </script>
+{% endblock %}

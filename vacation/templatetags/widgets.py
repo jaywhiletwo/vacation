@@ -13,6 +13,7 @@ register = template.Library()
 def render_widget(widget, head_color='black', body_color='white'):
     head_color = widget.page.header_color
     context = {
+        'id': widget.id,
         'title': widget.title,
         'title_link': widget.title_link or '',
         'edit_link': '/admin/vacation/widget/%s/' % widget.id,
@@ -24,7 +25,8 @@ def render_widget(widget, head_color='black', body_color='white'):
     if widget.type == 'TEXT':
         context['value'] = build_text(widget.value)
     elif widget.type == 'RSS':
-        context['value'] = build_rss(widget.value)
+        context['entries'] = get_rss_entries(widget.value)
+        return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'STOCK':
         context['quotes'] = format_stocks(widget.value)
         return render_to_string('widget_%s.html' % widget.type, context)
@@ -60,20 +62,19 @@ def build_text(value):
     return '<pre %s>%s</pre>' % (style, value)
 
 
-def build_rss(value):
+def get_rss_entries(value):
     try: 
         r = requests.get(value)
         feed = feedparser.parse(r.content)
     except:
         return 'No RSS found at %s' % value
 
-    link_list = []
-    for entry in feed['entries'][:7]:
-        link_list.extend(['<li><a target="_blank" href="%s">' % entry['link'], entry['title'], '</a></li>'])
+    link_list = feed['entries']
 
     if not link_list:
         return 'No RSS found at %s' % value
-    return '<ul>' + ''.join(link_list) + '</ul>'
+
+    return link_list
 
 
 def format_stocks(value):

@@ -37,7 +37,8 @@ def render_widget(widget, head_color='black', body_color='white'):
         context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
         return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'LINKS':
-        context['value'] = build_links(widget.value)
+        context['links'] = build_links(widget.value)
+        return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'CAL':
         context['value'] = widget.value
         return render_to_string('widget_%s.html' % widget.type, context)
@@ -116,14 +117,10 @@ def color(change, given_color=None):
 
 
 def build_links(value):
-    links_val = ['<ul>', ]
+    links = []
     for row in value.split('\n'):
-        line = row.split(',')
-        try:
-            links_val.extend(['<li><a target="_blank" href="', line[1], '">', line[0], '</a></li>',])  
-        except IndexError:
-            print 'build links failed on row: %s' % row
+        title, href = row.split(',')
+        links.append({'href': href, 'title': title, })
 
-    links_val.append('</ul>')
-    return ''.join(links_val)
+    return links
 

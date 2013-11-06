@@ -37,7 +37,7 @@ def render_widget(widget, head_color='black', body_color='white'):
         context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
         return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'LINKS':
-        context['links'] = build_links(widget.value)
+        context = dict(context.items() + build_link_context(widget.value).items())
         return render_to_string('widget_%s.html' % widget.type, context)
     elif widget.type == 'CAL':
         context['value'] = widget.value
@@ -116,11 +116,17 @@ def color(change, given_color=None):
     return '<font size=2 color="%s">%s</font>' % (color, change)
 
 
-def build_links(value):
+def build_link_context(value):
     links = []
-    for row in value.split('\n'):
+    link_context = {}
+    link_entries = value.split('\n')
+    if link_entries[0].strip() == 'Google':
+        link_context['search'] = 'Google'
+        link_entries = link_entries[1:]
+    for row in link_entries:
         title, href = row.split(',')
         links.append({'href': href, 'title': title, })
 
-    return links
+    link_context['links'] = links
 
+    return link_context

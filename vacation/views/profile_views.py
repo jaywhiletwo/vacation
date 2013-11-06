@@ -22,21 +22,21 @@ def show_widgets(request):
 
 
 def login_user(request):
-        logout(request)
-        username = password = ''
-        if request.POST:
-                username = request.POST['username']
-                password = request.POST['password']
-                user = authenticate(username=username, password=password)
-                if user is not None:
-                        if user.is_active:
-                                login(request, user)
-                                return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-        context = {
-            'form_title': 'Login', 
-            'form_action': '/login/',
-            'form': AuthenticationForm(),
-        }
-        return render_to_response('login.html', append_menu_items(context, request=request))
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+    context = {
+        'form_title': 'Login', 
+        'form_action': '/login/',
+        'form': AuthenticationForm(),
+    }
+    return render_to_response('base.html', append_menu_items(context, request=request))
 
 

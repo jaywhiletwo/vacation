@@ -22,7 +22,18 @@
 <BODY>
     <div class="container-fluid" style="background-color:BCBCBC" align=right>
         <b><a href="http://jenandjefflee.com/launch/">Widgets</a></b> | 
-        <a href={% url login_user %}>{% if user.is_authenticated %}Logout{% else %}Login{% endif %}</a>
+        {% if user.is_authenticated %}
+            <a href="{% url login_user %}">Logout</a>
+        {% else %}
+            <form style="display:inline; " enctype="application/x-www-form-urlencoded" method="post" action="{% url login_user %}">
+            {% csrf_token %}
+            {% for field in login_form %}
+                {{ field.label }}:
+                {{ field }}
+            {% endfor %}
+            <input type="submit" value="Login">
+            </form>
+        {% endif %}
     </div>
     <div class="container-fluid">
       <div class="row-fluid">

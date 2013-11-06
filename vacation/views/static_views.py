@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.auth.forms import AuthenticationForm
 from subprocess import check_output
 from vacation.models import Gallery, Image, Video, Message
 
@@ -9,7 +10,11 @@ def append_menu_items(context, request):
         'messages_list': Message.objects.all(),
         'collections_list': Gallery.objects.all(),
         'videos_list': Video.objects.all(),
+        'login_form': AuthenticationForm(),
     }
+    instyle = "display: inline-block; vertical-align: baseline; width: 5em"
+    menu_context['login_form'].fields['username'].widget.attrs['style'] = instyle
+    menu_context['login_form'].fields['password'].widget.attrs['style'] = instyle
     if not request:
         return dict(context.items() + menu_context.items())
     else:

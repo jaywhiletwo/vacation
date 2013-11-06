@@ -12,7 +12,8 @@ from vacation.models import Gallery
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', show_home, name='show_home'),
+    url(r'^$', launch, name='launch'),
+    url(r'^gallery/$', show_home, name='show_home'),
 	url(r'list_images/(?P<gallery_id>\d+)/$', list_images, name='list_images'),
 	url(r'^show_image/(?P<gallery_id>\d+)/(?P<image_id>\d+)/$', show_image, name='show_image'),
 	url(r'^show_video/(?P<video_id>\d+)/$', show_video, name='show_video'),

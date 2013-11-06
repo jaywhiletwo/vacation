@@ -1,6 +1,15 @@
 {% extends "widget.html" %}
 
 {% block widget_body %}
+  {% if search == 'Google' %}
+    <input type=text id="search" onkeydown="if (event.keyCode == 13) { searchit(this.value); }">
+    <input type=button onclick="searchit(search.value)" value="Google">
+    <script type="text/javascript">
+    function searchit(term){
+            window.location='http://www.google.com#q=' + term.replace(" ", "%20");
+    }
+    </script>
+  {% endif %}
   <ul class="list-unstyled">
   {% for link in links %}
     <li><i id="bullet_{{ id }}_{{ forloop.counter }}" class="glyphicon glyphicon-chevron-right" style="font-size: 9px; padding-bottom: 5px; " onclick="showLinkDiv{{ id }}({{ forloop.counter }});"></i> 

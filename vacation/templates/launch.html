@@ -15,7 +15,7 @@
         {% endif %}
       </div>
       <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px" align=right>
-        <b><a href="http://jenandjefflee.com/">Gallery</a></b> | 
+        <b><a href="{% url show_home %}">Gallery</a></b> | 
         <b><a target="_blank" href="http://jenandjefflee.com/admin/vacation/widgetpage/{{ page.id }}">Configure Page</a></b> | 
         <select id="pager" onchange="switchPage();">
             {% for p in user.widgetpage_set.all %}

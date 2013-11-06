@@ -68,7 +68,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/mnt/sidekick/Pictures',
+    '/home/jlee/Backup/Pictures',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -160,7 +160,7 @@ LOGGING = {
     }
 }
 
-LOCAL_RESOURCE = '/mnt/sidekick/Pictures/'
+LOCAL_RESOURCE = '/home/jlee/Backup/Pictures/'
 
 LOGIN_REDIRECT_URL = '/launch'
 LOGIN_URL = '/login'

@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 @register.inclusion_tag('_menu_list.html', takes_context=True)
-def draw_menu(context, obj_type, obj_list, menu_section_name):
+def draw_menu(context, obj_type, obj_list, menu_section_name, num=5):
     try:
         active_check = context['active_type'] == obj_type
         active_id = context['active_id']
@@ -13,7 +13,7 @@ def draw_menu(context, obj_type, obj_list, menu_section_name):
 
     return {
         'menu_item_type': menu_section_name,
-        'menu_item_list': obj_list,
+        'menu_item_list': obj_list[:num],
         'active_check': active_check,
         'active_id': active_id,
     }

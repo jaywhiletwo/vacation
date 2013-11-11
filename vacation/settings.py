@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     
     # my stuff
     'vacation', 
+    'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging

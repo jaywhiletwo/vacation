@@ -52,13 +52,11 @@ def render_widget(widget, head_color='black', body_color='white'):
 
 def build_text(value):
     contents = value.split('\n')
-    try:
-        if contents[0].startswith('style='):
-            style = contents[0]
-            text = ''.join(contents[1:])
-            return '<pre %s>%s</pre>' % (style, text)
-    except IndexError:
-        print 'failed to display text widget: %s' % value
+    if contents[0].startswith('style='):
+        style = contents[0]
+        text = ''.join(contents[1:])
+    else:
+        style = ''
 
     return '<pre %s>%s</pre>' % (style, value)
 

@@ -54,7 +54,7 @@ def build_text(value):
     contents = value.split('\n')
     if contents[0].startswith('style='):
         style = contents[0]
-        text = ''.join(contents[1:])
+        value = ''.join(contents[1:])
     else:
         style = ''
 

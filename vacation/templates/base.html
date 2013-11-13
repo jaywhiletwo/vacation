@@ -27,10 +27,8 @@
         {% else %}
             <form style="display:inline; " enctype="application/x-www-form-urlencoded" method="post" action="{% url login_user %}">
             {% csrf_token %}
-            {% for field in login_form %}
-                {{ field.label }}:
-                {{ field }}
-            {% endfor %}
+            {{ login_form.username.label }}: {{ login_form.username }}
+            {{ login_form.password.label }}: {{ login_form.password }}
             <input type="submit" value="Login">
             </form>
         {% endif %}

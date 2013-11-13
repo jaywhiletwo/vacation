@@ -14,6 +14,7 @@ def append_menu_items(context, request):
     }
     instyle = "display: inline-block; vertical-align: baseline; width: 5em"
     menu_context['login_form'].fields['username'].widget.attrs['style'] = instyle
+    menu_context['login_form'].fields['username'].widget.attrs['autofocus'] = 'autofocus'
     menu_context['login_form'].fields['password'].widget.attrs['style'] = instyle
     if not request:
         return dict(context.items() + menu_context.items())

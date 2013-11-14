@@ -1,7 +1,7 @@
 {% extends "widget.html" %}
 
 {% block widget_title %}
-    <span style="color: white">{{ title }}</span> <a target="_blank" href="https://accounts.google.com/Login">Login</a>
+    {% if title_link %}<a style="color: white" target="_blank" href="{{ title_link }}">{{ title|safe }}</a>{% else %}<span style="color:white">{{ title }}</span>{% endif %} <a target="_blank" href="https://accounts.google.com/Login">Login</a>
 {% endblock %}
 
 {% block widget_body %}

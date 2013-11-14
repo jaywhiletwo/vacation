@@ -24,8 +24,10 @@ class PageAdmin(admin.ModelAdmin):
 
 
 class WidgetAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'title_link', 'columns', 'page', )
-    list_editable = ('columns', 'page', )
+    list_display = ('__unicode__', 'title_link', 'columns', 'order', 'page', )
+    list_editable = ('columns', 'order', 'page', )
+    list_filter = ('page', )
+    ordering = ('order', )
 
 
 admin.site.register(Gallery, GalleryAdmin)

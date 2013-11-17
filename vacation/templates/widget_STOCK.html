@@ -4,14 +4,14 @@
   <div class="row">
         <div class="col-xs-2">Sym</div>
         <div class="col-xs-3" align=right>Price</div>
-        <div class="col-xs-2 hidden-phone" align=center>P/E</div>
+        <div class="col-xs-2 hidden-xs" align=center>P/E</div>
         <div class="col-xs-5" align=right>Price Change </div>
   </div>
   {% for quote in quotes %}
   <div class="row">
       <div class="col-xs-2"><a target="_blank" href="http://finance.yahoo.com/q?s={{ quote.symbol }}">{{ quote.symbol }}</a></div>
       <div class="col-xs-3" align=right>${{ quote.price|safe }}</div>
-      <div class="col-xs-2 hidden-phone" align=center>{{ quote.pe|safe }}</div>
+      <div class="col-xs-2 hidden-xs" align=center>{{ quote.pe|safe }}</div>
       <div class="col-xs-5" align=right>{{ quote.change_price|safe }} {{ quote.change_percent|safe }}</div>
   </div>
   {% endfor %}

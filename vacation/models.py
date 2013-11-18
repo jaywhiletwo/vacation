@@ -69,14 +69,13 @@ class Widget(models.Model):
     title_link = models.CharField(max_length=255, null=True, blank=True)
     type = models.CharField(max_length=20, choices=WIDGET_TYPE_CHOICES, default='TEXT')
     value = models.TextField()
-    page = models.ForeignKey(WidgetPage, null=True)
+    page = models.ForeignKey(WidgetPage, null=True, related_name='old_page')
+    pages = models.ManyToManyField(WidgetPage)
     columns = models.PositiveSmallIntegerField(default=4)
     order = models.PositiveIntegerField(default=0)
 
     def __unicode__(self):
         return '(%s) %s' % (self.type, self.title)
-
-
 
 
 class Video(MenuItem, models.Model):

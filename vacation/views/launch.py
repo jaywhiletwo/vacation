@@ -9,7 +9,7 @@ def launch_page(request, page_id):
     if not user.is_authenticated():
         return HttpResponseRedirect(settings.LOGIN_URL)
     page = WidgetPage.objects.get(pk=page_id)
-    widgets = Widget.objects.filter(page=page)
+    widgets = Widget.objects.filter(pages=page)
     context = {
         'user': user, 
         'page': page,

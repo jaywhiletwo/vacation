@@ -11,8 +11,7 @@ from vacation.forms import NotesWidgetForm
 register = template.Library()
 
 @register.simple_tag
-def render_widget(widget, head_color='black', body_color='white'):
-    print widget
+def render_widget(widget, head_color='black', body_color='white', csrf=None):
     head_color = widget.page.header_color
     new_context = {
         'id': widget.id,
@@ -47,14 +46,11 @@ def render_widget(widget, head_color='black', body_color='white'):
     elif widget.type == 'RAW':
         new_context['value'] = widget.value
     elif widget.type == 'NOTES':
-        #request = context['request']
-        request = ''
-        if request == 'POST':
-            form = NotesWidgetForm(request.POST)
-            form.save()
-        else:
-            form = NotesWidgetForm(instance=widget)
+        form = NotesWidgetForm(instance=widget)
         new_context['form'] = form
+        new_context['widget_id'] = widget.id
+        if csrf:
+            new_context['csrf_token'] = csrf
         return render_to_string('widget_%s.html' % widget.type, new_context)
     else:
         print '%s is not a valid widget' % widget.type

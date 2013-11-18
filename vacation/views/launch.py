@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.core.context_processors import csrf
 from vacation.models import Widget, WidgetPage
+from vacation.forms import NotesWidgetForm
 
 
 def launch_page(request, page_id):
+    if request.method == 'POST':
+        widget = Widget.objects.get(id=request.POST['widget_id'])
+        form = NotesWidgetForm(request.POST, instance=widget)
+        form.save()
+
     user = request.user
     if not user.is_authenticated():
         return HttpResponseRedirect(settings.LOGIN_URL)
@@ -21,6 +28,7 @@ def launch_page(request, page_id):
     except AttributeError:
         pass
 
+    context.update(csrf(request))
     return render(request, 'launch.html', context)
 
 def launch(request):

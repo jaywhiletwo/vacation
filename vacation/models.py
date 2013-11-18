@@ -64,6 +64,7 @@ class Widget(models.Model):
         ('LINKS', 'Links and Bookmarks'),
         ('CAL', 'Calendar Iframe'),
         ('RAW', 'Raw HTML and JS'),
+        ('NOTES', 'Shared Notes'),
     )
     title = models.CharField(max_length=50)
     title_link = models.CharField(max_length=255, null=True, blank=True)

@@ -5,14 +5,16 @@ import feedparser
 import requests
 import csv
 from vacation.models import Image
+from vacation.forms import NotesWidgetForm
 
 
 register = template.Library()
 
 @register.simple_tag
 def render_widget(widget, head_color='black', body_color='white'):
+    print widget
     head_color = widget.page.header_color
-    context = {
+    new_context = {
         'id': widget.id,
         'title': widget.title,
         'title_link': widget.title_link or '',
@@ -23,31 +25,41 @@ def render_widget(widget, head_color='black', body_color='white'):
     }
     
     if widget.type == 'TEXT':
-        context['value'] = build_text(widget.value)
+        new_context['value'] = build_text(widget.value)
     elif widget.type == 'RSS':
-        context['entries'] = get_rss_entries(widget.value)
-        return render_to_string('widget_%s.html' % widget.type, context)
+        new_context['entries'] = get_rss_entries(widget.value)
+        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'STOCK':
-        context['quotes'] = format_stocks(widget.value)
-        return render_to_string('widget_%s.html' % widget.type, context)
+        new_context['quotes'] = format_stocks(widget.value)
+        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'IMAGE':
         images = Image.objects.filter(id__in=widget.value.split(','))
         i = choice(images)
-        context['image_title'] = i.filename
-        context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
-        return render_to_string('widget_%s.html' % widget.type, context)
+        new_context['image_title'] = i.filename
+        new_context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
+        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'LINKS':
-        context = dict(context.items() + build_link_context(widget.value).items())
-        return render_to_string('widget_%s.html' % widget.type, context)
+        new_context = dict(new_context.items() + build_link_context(widget.value).items())
+        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'CAL':
-        context['value'] = widget.value
-        return render_to_string('widget_%s.html' % widget.type, context)
+        new_context['value'] = widget.value
+        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'RAW':
-        context['value'] = widget.value
+        new_context['value'] = widget.value
+    elif widget.type == 'NOTES':
+        #request = context['request']
+        request = ''
+        if request == 'POST':
+            form = NotesWidgetForm(request.POST)
+            form.save()
+        else:
+            form = NotesWidgetForm(instance=widget)
+        new_context['form'] = form
+        return render_to_string('widget_%s.html' % widget.type, new_context)
     else:
         print '%s is not a valid widget' % widget.type
 
-    return render_to_string('widget.html', context)
+    return render_to_string('widget.html', new_context)
 
 
 def build_text(value):

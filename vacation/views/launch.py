@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from vacation.models import Widget, WidgetPage
@@ -21,7 +21,7 @@ def launch_page(request, page_id):
     except AttributeError:
         pass
 
-    return render_to_response('launch.html', context)
+    return render(request, 'launch.html', context)
 
 def launch(request):
     user = request.user

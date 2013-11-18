@@ -1,6 +1,12 @@
 from django import forms
 from django.core.validators import RegexValidator
-from vacation.models import Image, Gallery
+from vacation.models import Image, Gallery, Widget
+
+
+class NotesWidgetForm(forms.ModelForm):
+    class Meta:
+        model = Widget
+        fields = ['value', ]
 
 
 class UploadImageForm(forms.Form):

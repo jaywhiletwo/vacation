@@ -1,0 +1,13 @@
+{% extends "widget.html" %}
+
+{% block widget_body %}
+    <style type="text/css">
+        #id_value {width: 100%;}
+    </style>
+    <form method="POST" action="{% url launch %}">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <input type="submit" value="Save" />
+    </form>
+{% endblock %}

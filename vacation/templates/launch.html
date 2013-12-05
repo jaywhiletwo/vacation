@@ -4,7 +4,6 @@
 <HEAD>
     <TITLE>Vacation Launch</TITLE>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta http-equiv="refresh" content="100" >
     <link href="{% static 'bootstrap3/css/bootstrap.css' %}" rel="stylesheet">
 </HEAD>
 <BODY>
@@ -32,6 +31,23 @@
     </div>
   </div>
   <script type="text/javascript">
+    setInterval(reload, 90*1000);
+    var freezeRefresh = false;
+
+    function inputBlur() {
+        freezeRefresh = false;
+    }
+
+    function inputFocus() {
+        freezeRefresh = true;
+    }
+
+    function reload(){
+        if(!freezeRefresh){
+            location.reload(true);
+        }
+    }
+
     function switchPage() {
         var url = document.getElementById("pager").value;
         window.location.href = url;

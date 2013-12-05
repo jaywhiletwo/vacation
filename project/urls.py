@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from django.contrib import admin
+from kat.urls import urlpatterns as kat_urls
 from vacation.views.launch import launch, launch_page
 from vacation.views.static_views import *
 from vacation.views.upload_views import UploadImage
@@ -25,5 +26,6 @@ urlpatterns = patterns('',
     url(r'^widgets/$', login_required(show_widgets), name='show_widgets'),
     url(r'^upload/$', login_required(UploadImage.as_view(), login_url='/admin'), name='upload_image'),
     url(r'^reboot/$', login_required(RebootView.as_view(), login_url='/admin'), name='reboot'),
+    url(r'^kat/', include(kat_urls)),
     url(r'^admin/', include(admin.site.urls)),
 )

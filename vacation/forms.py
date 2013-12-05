@@ -7,6 +7,17 @@ class NotesWidgetForm(forms.ModelForm):
     class Meta:
         model = Widget
         fields = ['value', ]
+        widgets = {'value': forms.Textarea(attrs={'onfocus': 'inputFocus()', 'onblur': 'inputBlur()', }), }
+
+    def clean(self, *args, **kwargs):
+        user_tag = '[note from %s]' % self.data['user']
+        val = self.cleaned_data['value'].split('\n')
+        if val[0].startswith('[') and val[0].strip().endswith(']'):
+            val[0] = user_tag
+        else:
+            val.insert(0, user_tag)
+        self.cleaned_data['value'] = '\n'.join(val)
+        return super(NotesWidgetForm, self).clean(*args, **kwargs)
 
 
 class UploadImageForm(forms.Form):

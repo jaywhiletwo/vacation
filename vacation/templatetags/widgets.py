@@ -49,6 +49,7 @@ def render_widget(widget, head_color='black', body_color='white', csrf=None):
         form = NotesWidgetForm(instance=widget)
         new_context['form'] = form
         new_context['widget_id'] = widget.id
+        new_context['user'] = widget.page.user.username
         if csrf:
             new_context['csrf_token'] = csrf
         return render_to_string('widget_%s.html' % widget.type, new_context)

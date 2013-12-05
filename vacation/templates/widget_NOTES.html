@@ -6,9 +6,13 @@
     </style>
     <form method="POST" action="{% url launch %}">
         {% csrf_token %}
-        {{ form }}
+        {% for field in form %}
+            {{ field }}
+        {% endfor %}
         <br>
         <input type="hidden" name="widget_id" value="{{ widget_id }}">
-        <input type="submit" value="Save" />
+        <input type="hidden" name="user" value="{{ user }}">
+        <input type="submit" value="Save" onclick="document.getElementById('saved').style.cssText = 'display: inline';"/>
     </form>
+    <span style="display: none" id="saved">Note saved!</span>
 {% endblock %}

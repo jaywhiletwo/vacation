@@ -7,7 +7,7 @@ class NotesWidgetForm(forms.ModelForm):
     class Meta:
         model = Widget
         fields = ['value', ]
-        widgets = {'value': forms.Textarea(attrs={'onfocus': 'inputFocus()', 'onblur': 'inputBlur()', }), }
+        widgets = {'value': forms.Textarea(attrs={'rows': '15', 'onfocus': 'inputFocus()', 'onblur': 'inputBlur()', }), }
 
     def clean(self, *args, **kwargs):
         user_tag = '[note from %s]' % self.data['user']

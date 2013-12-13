@@ -11,7 +11,7 @@ from vacation.forms import NotesWidgetForm
 register = template.Library()
 
 @register.simple_tag
-def render_widget(widget, head_color='black', body_color='white', csrf=None):
+def render_widget(widget, head_color='black', body_color='white', csrf=None, user=None):
     head_color = widget.page.header_color
     new_context = {
         'id': widget.id,
@@ -49,7 +49,7 @@ def render_widget(widget, head_color='black', body_color='white', csrf=None):
         form = NotesWidgetForm(instance=widget)
         new_context['form'] = form
         new_context['widget_id'] = widget.id
-        new_context['user'] = widget.page.user.username
+        new_context['user'] = user
         if csrf:
             new_context['csrf_token'] = csrf
         return render_to_string('widget_%s.html' % widget.type, new_context)

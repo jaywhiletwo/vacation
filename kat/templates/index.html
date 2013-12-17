@@ -9,36 +9,37 @@
     <div class="jumbotron">
         <div class="container">
         {% localtime on %}
-            <h1>Today's date: {% now "D M d, Y" %}</h1><a target="_blank" href="http://jenandjefflee.com/kat/admin/kat/keyactivity/">Edit</a>
+            <h1>Today's date: {% now "D M d, Y" %}</h1><a target="_blank" href="/kat/admin/kat/keyactivity/">Edit</a>
         {% endlocaltime %}
         </div>
     </div>
     <div class="container">
     {% for goal in key_goals %}
     {% cycle "<div class='row'>" "" "" %}
-        <div class="span4" style="outline: 1px solid black">
-            <h4>{{ goal.name }}</h4>
-            <ol>
-                {% for act in goal.keyactivity_set.all %}
-                        <li>
-                        {{ act.name }} {% if act.interval %}(every {{ act.interval }} days){% endif %}
-                        <br>
-                            {% if act.last_time %}
-                                Last completed {{ act.last_time|date:"D M d, Y" }}<br>
-                                Next due date {{ act.deadline|date:"D M d, Y" }}<br>
-                                <small class="label {% if act.days_left > 1 %}label-success{% elif act.days_left < 0 %}label-important{% else %}label-warning{% endif %}">
-                                    {{ act.days_left }} days left
-                                </small>
-                            {% else %}
-                                <small class="label label-default">
-                                Not completed yet
-                                </small>
-                            {% endif %}
-                        <br>
-                        <a class="btn btn-mini">I did this!</a>
-                        </li>
-                {% endfor %}
-            </ol>
+        <div class="span4 text-center" style="outline: 1px solid black">
+            <h4>{{ goal.name }} (every {{ goal.interval }} days)</h4>
+	    {% with goal.last_activity as act %}
+		    {% if act %}
+		        Last activity: {{ act.name }}<br>
+		        Completed: {{ act.completed|date:"D M d, Y" }}<br>
+		        Next due date: {{ goal.deadline|date:"D M d, Y" }}<br>
+			<small class="label {% if goal.days_left > 1 %}label-success{% elif goal.days_left < 0 %}label-important{% else %}label-warning{% endif %}">
+			    {{ goal.days_left }} days left
+			</small>
+		    {% else %}
+			<small class="label label-default">
+			Not completed yet
+			</small>
+		    {% endif %}
+		<br>
+		<form class="navbar-form" action="{% url kat %}" method="post">
+			{% csrf_token %}
+			<input type='hidden' name="goal_id" value="{{ goal.id }}"></input>
+			<input type='text' name="name" class='span2'></input>
+			<button type="submit" class="btn btn-mini">I did this!</button>
+		</form>
+		<br>
+	    {% endwith %}
         </div>
     {% cycle "" "" "</div><br>" %}
     {% endfor %}

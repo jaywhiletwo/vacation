@@ -1,10 +1,7 @@
 # Django settings for vacation project.
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Jeff', 'jeffrey.y.lee@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -83,7 +80,8 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'vz)+sqyw1hskupiad7p+1(%(b!t+0n4449_9=68ag*)%)musme'
+import os
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -130,7 +128,6 @@ INSTALLED_APPS = (
     # my stuff
     'vacation', 
     'kat',
-    'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging

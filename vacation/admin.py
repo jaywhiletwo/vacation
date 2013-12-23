@@ -4,8 +4,6 @@ from django.conf import settings
 from vacation.models import Gallery, Image, Video, Message, Widget, WidgetPage
 import subprocess
 
-admin.site.unregister(User)
-
 
 class WidgetInline(admin.StackedInline):
     model = Widget

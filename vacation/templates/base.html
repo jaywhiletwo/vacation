@@ -29,6 +29,7 @@
             {% csrf_token %}
             {{ login_form.username.label }}: {{ login_form.username }}
             {{ login_form.password.label }}: {{ login_form.password }}
+            {{ message }}
             <input type="submit" value="Login">
             </form>
         {% endif %}

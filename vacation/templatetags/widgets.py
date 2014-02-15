@@ -1,5 +1,6 @@
 from django import template
 from django.template.loader import render_to_string
+from django.core.cache import cache
 from random import choice
 import feedparser
 import requests
@@ -26,7 +27,12 @@ def render_widget(widget, head_color='black', body_color='white', csrf=None, use
     if widget.type == 'TEXT':
         new_context['value'] = build_text(widget.value)
     elif widget.type == 'RSS':
-        new_context['entries'] = get_rss_entries(widget.value)
+        key = 'widget_%s' % widget.id
+        rss_content = cache.get(key)
+        if not rss_content:
+            rss_content = get_rss_entries(widget.value)
+            cache.set(key, rss_content, 60 * 15)
+        new_context['entries'] = rss_content
         return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'STOCK':
         new_context['quotes'] = format_stocks(widget.value)
@@ -82,7 +88,7 @@ def get_rss_entries(value):
     if not link_list:
         return 'No RSS found at %s' % value
 
-    return link_list
+    return link_list[:5]
 
 
 def format_stocks(value):
@@ -93,7 +99,7 @@ def format_stocks(value):
         return 'Broken'
     
     quotes = []
-    for row in r.content.split('\n'):
+    for row in r.content.strip().split('\n'):
         try:
             line = row.split(',')
             quote = {

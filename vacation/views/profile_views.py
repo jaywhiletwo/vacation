@@ -23,7 +23,8 @@ def show_widgets(request):
 
 def login_user(request):
     logout(request)
-    username = password = ''
+    username = password = error = ''
+
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -32,10 +33,13 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        error = 'Bad login, try again'
+
     context = {
         'form_title': 'Login', 
         'form_action': '/login/',
         'form': AuthenticationForm(),
+        'message': error,
     }
     return render_to_response('base.html', append_menu_items(context, request=request))
 

@@ -30,6 +30,8 @@ class UploadImage(View):
             self.copy_image_to_directory(data['filename'], extension, image_file, data['gallery'])
             self.create_message(data['message_name'], data['message_text'], image_obj)
             return list_images(request, form.cleaned_data['gallery'].id)
+        else:
+            return self.get(request)
 
     def create_image_object(self, filename, extension, gallery):
         return Image.objects.create(filename=filename, extension=extension, gallery=gallery)

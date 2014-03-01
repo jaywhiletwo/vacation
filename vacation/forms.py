@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
+from django.forms.widgets import HiddenInput
 from vacation.models import Image, Gallery, Widget
 
 
@@ -21,11 +22,11 @@ class NotesWidgetForm(forms.ModelForm):
 
 
 class UploadImageForm(forms.Form):
-    filename = forms.CharField(max_length=255, validators=[RegexValidator(regex='[A-Za-z0-9_-]+', message='invalid characters')])
+    filename = forms.CharField(max_length=255, label="Filename (e.g. 'ryan_napping')", validators=[RegexValidator(regex='[A-Za-z0-9_-]+', message='invalid characters')])
     image_file = forms.FileField()
     gallery = forms.ModelChoiceField(queryset=Gallery.objects.all().order_by('order'), empty_label=None)
-    message_name = forms.CharField(max_length=255, required=False)
-    message_text = forms.CharField(max_length=2048, required=False, widget=forms.Textarea)
+    message_name = forms.CharField(max_length=255, required=False, label="Message name (optional)")
+    message_text = forms.CharField(max_length=2048, required=False, widget=forms.Textarea, label="Message text (optional)")
 
 
 REBOOT_CHOICES = (('to_windows', 'To Windows'),

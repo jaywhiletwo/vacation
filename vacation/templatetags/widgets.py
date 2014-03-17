@@ -39,6 +39,7 @@ def render_widget(widget, head_color='black', body_color='white', csrf=None, use
         images = Image.objects.filter(id__in=widget.value.split(','))
         i = choice(images)
         new_context['image_title'] = i.filename
+        new_context['image_id'] = i.id
         new_context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
     elif widget.type == 'LINKS':
         new_context = dict(new_context.items() + build_link_context(widget.value).items())

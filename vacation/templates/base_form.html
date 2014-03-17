@@ -6,7 +6,7 @@
         <h3>{{ form_title }}</h3>
         <form enctype="{{ form_enctype }}" method="post" action="{{ form_action }}">
         {% csrf_token %}
-        {{ form.errors }}
+        {{ errors }}
         {{ form }}
         <br>
         <input type="submit">

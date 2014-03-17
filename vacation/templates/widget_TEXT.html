@@ -1,0 +1,21 @@
+<div class="col-md-{% firstof cols 4 %}" style="margin-top: 20px; min-height: 220px">
+    <div class="row" style="background-color: {{ head_color }}; margin: 3px; padding: 3px">
+        <b>{% block widget_title %} {% if title_link %}<a style="color: white" target="_blank" href="{{ title_link }}">{{ title|safe }}</a>{% else %}<span style="color:white">{{ title }}</span>{% endif %} {% endblock %}</b>
+        <span style="float: right"> <a target="_blank" href="{{ edit_link }}">Edit</a> </span>
+    </div>
+    <div class="row" style="background-color: {{ body_color }}; margin: 3px; min-height: 200px">
+        <style type="text/css">
+            pre {
+                word-break: break-all; /* webkit /
+                word-wrap: break-word;
+                white-space: pre;
+                white-space: -moz-pre-wrap; / fennec /
+                white-space: pre-wrap;
+                white-space: pre\9; / IE7+ */
+            }
+        </style>
+        {% block widget_body %}
+            {{ value|safe }}
+        {% endblock %}
+    </div>
+</div>

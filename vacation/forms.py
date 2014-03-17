@@ -22,11 +22,11 @@ class NotesWidgetForm(forms.ModelForm):
 
 
 class UploadImageForm(forms.Form):
-    filename = forms.CharField(max_length=255, label="Filename (e.g. 'ryan_napping')", validators=[RegexValidator(regex='[A-Za-z0-9_-]+', message='invalid characters')])
     image_file = forms.FileField()
-    gallery = forms.ModelChoiceField(queryset=Gallery.objects.all().order_by('order'), empty_label=None)
-    message_name = forms.CharField(max_length=255, required=False, label="Message name (optional)")
-    message_text = forms.CharField(max_length=2048, required=False, widget=forms.Textarea, label="Message text (optional)")
+    filename = forms.CharField(max_length=255, label="Filename (e.g. 'ryan_napping')", validators=[RegexValidator(regex='[A-Za-z0-9_-]+', message='invalid characters')])
+    gallery = forms.ModelChoiceField(queryset=Gallery.objects.all().order_by('order'), empty_label=None, initial=Gallery.objects.get(name='Queue'), widget=HiddenInput)
+    message_name = forms.CharField(max_length=255, required=False, label="Message name (optional)", widget=HiddenInput)
+    message_text = forms.CharField(max_length=2048, required=False, label="Message text (optional)", widget=HiddenInput)
 
 
 REBOOT_CHOICES = (('to_windows', 'To Windows'),

@@ -1,6 +1,6 @@
 from project.settings.default import *
 # LIVE SETTINGS
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 

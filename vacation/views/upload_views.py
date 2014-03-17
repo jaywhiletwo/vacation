@@ -5,16 +5,20 @@ from django.conf import settings
 from vacation.views.static_views import append_menu_items, list_images
 from vacation.forms import UploadImageForm
 from vacation.models import Image, Message
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class UploadImage(View):
-    def get(self, request):
+    def get(self, request, errors=''):
         form = UploadImageForm()
         context = {
             'form_title': 'Upload Image',
             'form_action': '/upload/',
             'form_enctype': 'multipart/form-data',
             'form': form,
+            'errors': errors,
         }
         context.update(csrf(request))
         return render_to_response('base_form.html', append_menu_items(context, request))
@@ -31,7 +35,7 @@ class UploadImage(View):
             self.create_message(data['message_name'], data['message_text'], image_obj)
             return list_images(request, form.cleaned_data['gallery'].id)
         else:
-            return self.get(request)
+            return self.get(request, errors=form.errors)
 
     def create_image_object(self, filename, extension, gallery):
         return Image.objects.create(filename=filename, extension=extension, gallery=gallery)

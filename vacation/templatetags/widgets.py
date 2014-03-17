@@ -33,22 +33,17 @@ def render_widget(widget, head_color='black', body_color='white', csrf=None, use
             rss_content = get_rss_entries(widget.value)
             cache.set(key, rss_content, 60 * 15)
         new_context['entries'] = rss_content
-        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'STOCK':
         new_context['quotes'] = format_stocks(widget.value)
-        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'IMAGE':
         images = Image.objects.filter(id__in=widget.value.split(','))
         i = choice(images)
         new_context['image_title'] = i.filename
         new_context['image_path'] = '/static/%s/%s.%s' % (i.gallery.dir_name, i.filename, i.extension)
-        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'LINKS':
         new_context = dict(new_context.items() + build_link_context(widget.value).items())
-        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'CAL':
         new_context['value'] = widget.value
-        return render_to_string('widget_%s.html' % widget.type, new_context)
     elif widget.type == 'RAW':
         new_context['value'] = widget.value
     elif widget.type == 'NOTES':
@@ -58,11 +53,10 @@ def render_widget(widget, head_color='black', body_color='white', csrf=None, use
         new_context['user'] = user
         if csrf:
             new_context['csrf_token'] = csrf
-        return render_to_string('widget_%s.html' % widget.type, new_context)
     else:
         print '%s is not a valid widget' % widget.type
 
-    return render_to_string('widget.html', new_context)
+    return render_to_string('widget_%s.html' % widget.type, new_context)
 
 
 def build_text(value):

@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from subprocess import check_output
 from vacation.models import Gallery, Image, Video, Message
+from vacation.forms import AddToWidgetForm
 
 
 def append_menu_items(context, request):
@@ -44,16 +45,31 @@ def list_images(request, gallery_id):
 
 
 def show_image(request, gallery_id, image_id):
+    confirm = ''
+    if request.method == 'POST':
+        form = AddToWidgetForm(request.POST)
+        if form.is_valid():
+            widget = form.cleaned_data['widget']
+            if image_id in widget.value.split(','):
+                confirm = 'Widget already has picture'
+            else:
+                widget.value = ','.join((widget.value, image_id))
+                widget.save()
+                confirm = 'Saved to %s' % widget
+
     gallery = Gallery.objects.get(id=gallery_id)
     image = Image.objects.get(id=image_id)
+    form = AddToWidgetForm()
     context = {
         'title': gallery.name,
+        'confirm': confirm,
         'active_id': gallery.id,
         'active_type': u'gallery', 
         'path': gallery.dir_name,
         'file': image.filename + '.' + image.extension,
         'next_image_id': image.id + 1,
         'prev_image_id': image.id - 1,
+        'form': form,
     }
     return render_to_response('show_image.html', append_menu_items(context, request))
 

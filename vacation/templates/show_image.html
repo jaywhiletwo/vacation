@@ -3,6 +3,14 @@
 
 {% block content %}
     <div class="hero-unit">
+        <div class="well">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input type=submit class="btn btn-large btn-success" value="Add to Widget"</a> 
+                {{ confirm }}
+            </form>
+        </div>
         <a href="{% url show_image active_id prev_image_id %}">
             &lt;&lt;
         </a>

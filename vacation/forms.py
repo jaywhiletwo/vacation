@@ -4,6 +4,10 @@ from django.forms.widgets import HiddenInput
 from vacation.models import Image, Gallery, Widget
 
 
+class AddToWidgetForm(forms.Form):
+    widget = forms.ModelChoiceField(queryset=Widget.objects.filter(type="IMAGE"), required=True, empty_label=None)
+
+
 class NotesWidgetForm(forms.ModelForm):
     class Meta:
         model = Widget

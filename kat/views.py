@@ -13,3 +13,7 @@ def kat(request):
 
 def save_activity(name, goal_id):
     KeyActivity.objects.create(name=name, key_goal=KeyGoal.objects.get(id=goal_id))
+
+
+def test_view(request):
+    return render(request, 'test.html', {})

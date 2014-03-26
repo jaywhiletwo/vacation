@@ -7,6 +7,9 @@
         <form enctype="{{ form_enctype }}" method="post" action="{{ form_action }}">
         {% csrf_token %}
         {{ errors }}
+        <label for="id_image_file">
+            <img src="{% static 'upload.png' %}">
+        </label>
         {{ form }}
         <br>
         <input type="submit">

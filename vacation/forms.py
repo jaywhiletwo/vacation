@@ -26,7 +26,7 @@ class NotesWidgetForm(forms.ModelForm):
 
 
 class UploadImageForm(forms.Form):
-    image_file = forms.FileField()
+    image_file = forms.FileField(label='')
     filename = forms.CharField(max_length=255, label="Filename (e.g. 'ryan_napping')", validators=[RegexValidator(regex='[A-Za-z0-9_-]+', message='invalid characters')])
     gallery = forms.ModelChoiceField(queryset=Gallery.objects.all().order_by('order'), empty_label=None, initial=Gallery.objects.get(name='Queue'), widget=HiddenInput)
     message_name = forms.CharField(max_length=255, required=False, label="Message name (optional)", widget=HiddenInput)

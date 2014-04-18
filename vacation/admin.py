@@ -13,6 +13,7 @@ class WidgetInline(admin.StackedInline):
 
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', )
+    list_editable = ('order', )
 
 
 class PageAdmin(admin.ModelAdmin):

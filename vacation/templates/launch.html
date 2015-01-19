@@ -12,7 +12,9 @@
       <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px">
         {% if user %}
           Welcome back, {{ user.username }}
+        <br>
         {% endif %}
+        Back to <a href="/">jaywhiletwo.com</a>
       </div>
       <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px" align=right>
         <b><a href="{% url "kat" %}">KAT (beta)</a></b> | 

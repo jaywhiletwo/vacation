@@ -21,7 +21,11 @@
         </style>
 </HEAD>
 <BODY>
-    <div class="container-fluid" style="background-color:BCBCBC" align=right>
+    <div class="container-fluid" style="background-color:BCBCBC">
+        <div class="span10">
+            Back to <a href="/">jaywhiletwo.com</a>
+        </div>
+        <div class="span10" align=right>
         <b><a href="/launch/">Widgets</a></b> | 
         {% if user.is_authenticated %}
             <a href="{% url "login_user" %}">Logout</a>
@@ -34,6 +38,7 @@
             <input type="submit" value="Login">
             </form>
         {% endif %}
+    </div>
     </div>
     <div class="container-fluid">
       <div class="row-fluid">

@@ -4,5 +4,5 @@ from project import urls as project_urls
 
 
 urlpatterns = patterns('',
-    url(r'^vacation', include(project_urls)),
+    url(r'^vacation/', include(project_urls)),
 )

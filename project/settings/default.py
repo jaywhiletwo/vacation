@@ -178,5 +178,5 @@ LOGGING = {
 
 LOCAL_RESOURCE = '/home/jlee/Backup/Pictures/'
 
-LOGIN_REDIRECT_URL = '/launch'
-LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/vacation/launch'
+LOGIN_URL = '/vacation/login'

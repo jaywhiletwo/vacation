@@ -5,7 +5,7 @@
         {% if image %}
         <div class="span4">
         <p>
-                <a href="{% url "show_image" image.gallery_id image.id %}" target=new>
+                <a href="{% url 'show_image' image.gallery_id image.id %}" target=new>
                     <img width=80% src="/static/{{ image.gallery.dir_name }}/{{ image.filename }}.{{ image.extension }}">
                 </a>
         </p>

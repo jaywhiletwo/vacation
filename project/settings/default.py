@@ -1,5 +1,7 @@
 # Django settings for vacation project.
 
+DEBUG = True
+
 ADMINS = (
     ('Jeff', 'jeffrey.y.lee@gmail.com'),
 )
@@ -86,9 +88,7 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-import os
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = "justforfun"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

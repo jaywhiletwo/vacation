@@ -42,5 +42,3 @@ def login_user(request):
         'message': error,
     }
     return render_to_response('base.html', append_menu_items(context, request=request))
-
-

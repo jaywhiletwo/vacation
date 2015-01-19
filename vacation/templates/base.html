@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
     <TITLE>{{ title }}</TITLE>
-    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
         <style>
                 h1 a:hover {
                     text-decoration: none;
@@ -23,9 +23,9 @@
     <div class="container-fluid" style="background-color:BCBCBC" align=right>
         <b><a href="/launch/">Widgets</a></b> | 
         {% if user.is_authenticated %}
-            <a href="{% url login_user %}">Logout</a>
+            <a href="{% url "login_user" %}">Logout</a>
         {% else %}
-            <form style="display:inline; " enctype="application/x-www-form-urlencoded" method="post" action="{% url login_user %}">
+            <form style="display:inline; " enctype="application/x-www-form-urlencoded" method="post" action="{% url "login_user" %}">
             {% csrf_token %}
             {{ login_form.username.label }}: {{ login_form.username }}
             {{ login_form.password.label }}: {{ login_form.password }}
@@ -37,7 +37,7 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-            <h1><a href="{% url show_home %}">Always On Vacation</a></h1>
+            <h1><a href="{% url "show_home" %}">Always On Vacation</a></h1>
           <div class="well sidebar-nav">
              <ul class="nav nav-list">
                 {% draw_menu 'message' messages_list 'Messages' %}

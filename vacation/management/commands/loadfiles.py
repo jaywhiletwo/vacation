@@ -15,9 +15,10 @@ class Command(BaseCommand):
             raise CommandError(HELP_MSG)
         dir_name =  settings.LOCAL_RESOURCE + g.dir_name
         try:
-            self.stdout.write('Processing %s' % dir_name)
+            self.stdout.write('Processing %s\n' % dir_name)
             files = subprocess.check_output(['ls', '%s' % dir_name]).split('\n')
             tn_dir = subprocess.check_output(['mkdir', '-p', '%s/tn' % dir_name]).split('\n')
+            self.stdout.write('Found %s files\n' % files)
         except subprocess.CalledProcessError:
             raise CommandError('Directory "%s" does not exist' % dir_name)
         else:

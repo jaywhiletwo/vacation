@@ -18,7 +18,7 @@ def launch_page(request, page_id):
     page = WidgetPage.objects.get(pk=page_id)
     widgets = Widget.objects.filter(pages=page)
     context = {
-        'user': user, 
+        'user': user,
         'page': page,
         'widgets': widgets.order_by('order'),
     }
@@ -31,11 +31,14 @@ def launch_page(request, page_id):
     context.update(csrf(request))
     return render(request, 'launch.html', context)
 
+
 def launch(request):
     user = request.user
     if not user.is_authenticated():
         return HttpResponseRedirect(settings.LOGIN_URL)
-    
-    default_page = WidgetPage.objects.filter(user=user).order_by('id')[0]
+
+    default_page = WidgetPage.objects.filter(user=user).order_by('id').first()
+    if not default_page:
+        WidgetPage(user=request.user, name="default", ).save()
 
     return launch_page(request, default_page.id)

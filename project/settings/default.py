@@ -1,5 +1,7 @@
 # Django settings for vacation project.
 
+DEBUG = True
+
 ADMINS = (
     ('Jeff', 'jeffrey.y.lee@gmail.com'),
 )

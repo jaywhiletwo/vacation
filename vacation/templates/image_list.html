@@ -11,7 +11,7 @@
     </script>
         <div class="hero-unit">
             {% for file in image_list %}
-                <a href="{% url show_image active_id file.id %}">
+                <a href="{% url "show_image" active_id file.id %}">
                     <img width=32% class="lazy" src="/static/{{ path }}/tn/{{ file.filename }}.{{ file.extension }}">
                 </a>
             {% endfor %}

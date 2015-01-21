@@ -19,7 +19,7 @@
       <div class="col-md-6" style="background-color:{{ page.header_color }}; color:white; height:50px" align=right>
         <b><a href="{% url "kat" %}">KAT (beta)</a></b> | 
         <b><a href="{% url "show_home" %}">Gallery</a></b> | 
-        <b><a target="_blank" href="/admin/vacation/widget/?pages__id__exact={{ page.id }}">Arrange Page</a></b> | 
+        <b><a target="_blank" href="/vacation/admin/vacation/widget/?pages__id__exact={{ page.id }}">Arrange Page</a></b> | 
         <select id="pager" onchange="switchPage();">
             {% for p in user.widgetpage_set.all %}
                 <option value="{% url "launch_page" p.id %}" {% if p.id == page.id %}selected{% endif %}>{{ p.name }}</option>

@@ -14,3 +14,4 @@ virtualenvwrapper>=4.1.1
 wsgiref>=0.1.2
 Werkzeug>=0.9.4
 zope.interface>=4.0.5
+django-redis==3.8.2

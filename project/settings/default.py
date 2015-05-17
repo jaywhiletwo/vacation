@@ -184,3 +184,4 @@ LOGIN_URL = '/vacation/login'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+SESSION_COOKIE_SECURE = True
